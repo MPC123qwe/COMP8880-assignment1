@@ -75,12 +75,13 @@ plt.grid(True, which="both", ls="--")
 plt.show()
 
 # Q5:
-
 diameter = nx.diameter(G_largest)
 print("The (unweighted) diameter of the giant component is：", diameter)
 peripheral_nodes = nx.periphery(G_largest)
 print("peripheral node candidate:", peripheral_nodes)
+# Select the first edge node as the starting point
 source = peripheral_nodes[0]
+# calculate the shortest length
 lengths = nx.single_source_shortest_path_length(G_largest, source)
 target = None
 for node, d in lengths.items():
@@ -100,6 +101,7 @@ else:
 name_to_node = {data['name']: node for node, data in G.nodes(data=True)}
 source_node = name_to_node["Canberra"]
 target_node = name_to_node["Cape Town"]
+# Calculate the shortest path from the starting point to the destination in the graph G
 shortest_path_nodes = nx.shortest_path(G, source=source_node, target=target_node)
 shortest_path_names = [G.nodes[node]['name'] for node in shortest_path_nodes]
 num_flights = len(shortest_path_nodes) - 1
@@ -107,8 +109,10 @@ print("Minimum number of flights required:", num_flights)
 print("City/Airport Name:")
 print(" -> ".join(shortest_path_names))
 
-#Q7
+
+# Q7:
 betweenness = nx.betweenness_centrality(G)
+# Sort the nodes
 top10 = sorted(betweenness.items(), key=lambda x: x[1], reverse=True)[:10]
 print("Top 10 cities/airports by betweenness centrality:")
 for node, centrality in top10:
